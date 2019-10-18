@@ -97,6 +97,7 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
             ),
             monthTextStyle: widget.monthTextStyle ?? Theme.of(context).textTheme.body1.copyWith(
               fontWeight: FontWeight.bold,
+              fontSize: 12,
             ),
             dateTextStyle: widget.dateTextStyle ?? Theme.of(context).textTheme.title.copyWith(
               fontSize: 24,
@@ -104,6 +105,7 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
             ),
             dayTextStyle: widget.dayTextStyle ?? Theme.of(context).textTheme.body1.copyWith(
               fontWeight: FontWeight.bold,
+              fontSize: 12,
             ),
             locale: widget.locale,
             selectionColor: isSelected ? (widget.selectionColor ?? Theme.of(context).splashColor) : Colors.transparent,
