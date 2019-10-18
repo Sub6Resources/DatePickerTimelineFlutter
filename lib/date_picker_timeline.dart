@@ -50,7 +50,7 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
     super.initState();
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _width = WidgetsBinding.instance.renderView.size.width / 2 - 56;
+      _width = context.size.width / 2 - 35;
       _scrollController.jumpTo(
         Duration(
                   milliseconds: widget.currentDate.millisecondsSinceEpoch -
@@ -79,7 +79,7 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
         scrollDirection: Axis.horizontal,
         controller: _scrollController,
         padding: EdgeInsets.zero,
-        itemBuilder: (context, index) {
+        itemBuilder: (_, index) {
           // Return the Date Widget
           DateTime _date = (widget.startDate ?? DateTime.now()).add(Duration(days: index));
           DateTime date = new DateTime(_date.year, _date.month, _date.day);
@@ -101,7 +101,7 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
               setState(() {
                 widget.currentDate = selectedDate;
               });
-              _width = WidgetsBinding.instance.renderView.size.width / 2 - 56;
+              _width = context.size.width / 2 - 35;
               _scrollController.animateTo(
                 index * 70.0 - _width,
                 duration: Duration(milliseconds: 200),
