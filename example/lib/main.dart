@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      darkTheme: ThemeData.dark(),
       home: MyHomePage(title: 'Date Picker Timeline Demo'),
     );
   }
@@ -35,7 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Container(
           padding: EdgeInsets.all(20.0),
-          color: Colors.blueGrey[100],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
