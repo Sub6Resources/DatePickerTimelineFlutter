@@ -1,3 +1,4 @@
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 /// ***
 /// This class consists of the DateWidget that is used in the ListView.builder
 ///
@@ -5,7 +6,6 @@
 /// github: https://github.com/iamvivekkaushik/
 /// ***
 
-import 'package:date_picker_timeline/gestures/tap.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -52,8 +52,9 @@ class DateWidget extends StatelessWidget {
                   style: dateTextStyle),
               Text(new DateFormat("MMM", locale).format(date).toUpperCase(), // Month
                   style: monthTextStyle),
+              SizedBox(height: 4),
               Text(new DateFormat("yyyy", locale).format(date).toUpperCase(),
-                style: monthTextStyle),
+                style: yearTextStyle),
 
             ],
           ),
