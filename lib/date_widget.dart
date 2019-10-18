@@ -11,13 +11,14 @@ import 'package:intl/intl.dart';
 
 class DateWidget extends StatelessWidget {
   final DateTime date;
-  final TextStyle monthTextStyle, dayTextStyle, dateTextStyle;
+  final TextStyle yearTextStyle, monthTextStyle, dayTextStyle, dateTextStyle;
   final Color selectionColor;
   final DateSelectionCallback onDateSelected;
   final String locale;
 
   DateWidget(
       {@required this.date,
+      @required this.yearTextStyle,
       @required this.monthTextStyle,
       @required this.dayTextStyle,
       @required this.dateTextStyle,
@@ -31,6 +32,7 @@ class DateWidget extends StatelessWidget {
     return InkWell(
       child: Container(
         margin: EdgeInsets.all(3.0),
+        width: 64,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
           color: selectionColor,
@@ -42,12 +44,15 @@ class DateWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Text(new DateFormat("E", locale).format(date).toUpperCase(), // WeekDay
+                  style: dayTextStyle),
+              Text(new DateFormat("dd", locale).format(date).toUpperCase(), // Date
+                  style: dateTextStyle),
               Text(new DateFormat("MMM", locale).format(date).toUpperCase(), // Month
                   style: monthTextStyle),
-              Text(date.day.toString(), // Date
-                  style: dateTextStyle),
-              Text(new DateFormat("E", locale).format(date).toUpperCase(), // WeekDay
-                  style: dayTextStyle)
+              Text(new DateFormat("yyyy", locale).format(date).toUpperCase(),
+                style: monthTextStyle),
+
             ],
           ),
         ),

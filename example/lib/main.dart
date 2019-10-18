@@ -49,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               DatePickerTimeline(
                 _selectedValue,
+                startDate: DateTime(2019),
                 onDateChange: (date) {
                   // New date selected
                   setState(() {
