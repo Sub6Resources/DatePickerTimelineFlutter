@@ -56,12 +56,15 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
     super.initState();
     _currentDate = removeTime(widget.currentDate);
     _scrollController = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _width = context.size.width / 2 - 35;
-      _scrollController.jumpTo(
-        removeTime(widget.currentDate).difference(removeTime(widget.startDate)).inDays * 70.0 - _width,
+    if (_currentDate != null) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          _width = context.size.width / 2 - 35;
+          final startDate = removeTime(widget.startDate ?? DateTime.now());
+          _scrollController.jumpTo(_currentDate.difference(startDate).inDays * 70.0 - _width);
+        },
       );
-    });
+    }
     initializeDateFormatting(widget.locale, null);
   }
 
@@ -81,31 +84,37 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
         scrollDirection: Axis.horizontal,
         controller: _scrollController,
         padding: EdgeInsets.zero,
-        itemBuilder: (_, index) {
+        itemBuilder: (_, i) {
           // Return the Date Widget
-          DateTime _date = removeTime(widget.startDate ?? DateTime.now()).add(Duration(days: index));
-          bool isSelected = compareDate(_date, _currentDate);
+          DateTime _date = removeTime(widget.startDate ?? DateTime.now()).add(Duration(days: i));
+          bool isSelected = _currentDate != null && compareDate(_date, _currentDate);
 
           return DateWidget(
             date: _date,
-            yearTextStyle: widget.yearTextStyle ?? Theme.of(context).textTheme.overline.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 10,
-            ),
-            monthTextStyle: widget.monthTextStyle ?? Theme.of(context).textTheme.body1.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-            dateTextStyle: widget.dateTextStyle ?? Theme.of(context).textTheme.title.copyWith(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-            dayTextStyle: widget.dayTextStyle ?? Theme.of(context).textTheme.body1.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
+            yearTextStyle: widget.yearTextStyle ??
+                Theme.of(context).textTheme.overline.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+            monthTextStyle: widget.monthTextStyle ??
+                Theme.of(context).textTheme.body1.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+            dateTextStyle: widget.dateTextStyle ??
+                Theme.of(context).textTheme.title.copyWith(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+            dayTextStyle: widget.dayTextStyle ??
+                Theme.of(context).textTheme.body1.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
             locale: widget.locale,
-            selectionColor: isSelected ? (widget.selectionColor ?? Theme.of(context).splashColor) : Colors.transparent,
+            selectionColor: isSelected
+                ? (widget.selectionColor ?? Theme.of(context).splashColor)
+                : Colors.transparent,
             onDateSelected: (selectedDate) {
               // A date is selected
               if (widget.onDateChange != null) {
@@ -116,7 +125,7 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
               });
               _width = context.size.width / 2 - 35;
               _scrollController.animateTo(
-                index * 70.0 - _width,
+                i * 70.0 - _width,
                 duration: Duration(milliseconds: 200),
                 curve: Curves.easeIn,
               );
@@ -128,6 +137,7 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
   }
 
   DateTime removeTime(DateTime dateTime) {
+    if (dateTime == null) return null;
     return DateTime(dateTime.year, dateTime.month, dateTime.day);
   }
 
