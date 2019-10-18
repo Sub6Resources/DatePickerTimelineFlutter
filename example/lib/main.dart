@@ -26,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DateTime _selectedValue = DateTime.now();
+  DateTime _selectedValue = DateTime.now().add(Duration(days: 5));
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               DatePickerTimeline(
                 _selectedValue,
-                startDate: DateTime(2019),
+                startDate: DateTime.now(),
                 onDateChange: (date) {
                   // New date selected
                   setState(() {

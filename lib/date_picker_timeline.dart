@@ -51,17 +51,12 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
   @override
   void initState() {
     super.initState();
-    _currentDate = widget.currentDate;
+    _currentDate = removeTime(widget.currentDate);
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _width = context.size.width / 2 - 35;
       _scrollController.jumpTo(
-        Duration(
-                  milliseconds: widget.currentDate.millisecondsSinceEpoch -
-                      widget.startDate.millisecondsSinceEpoch,
-                ).inDays *
-                70.0 -
-            _width,
+        removeTime(widget.currentDate).difference(removeTime(widget.startDate)).inDays * 70.0 - _width,
       );
     });
     initializeDateFormatting(widget.locale, null);
@@ -85,12 +80,11 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
         padding: EdgeInsets.zero,
         itemBuilder: (_, index) {
           // Return the Date Widget
-          DateTime _date = (widget.startDate ?? DateTime.now()).add(Duration(days: index));
-          DateTime date = new DateTime(_date.year, _date.month, _date.day);
-          bool isSelected = compareDate(date, _currentDate);
+          DateTime _date = removeTime(widget.startDate ?? DateTime.now()).add(Duration(days: index));
+          bool isSelected = compareDate(_date, _currentDate);
 
           return DateWidget(
-            date: date,
+            date: _date,
             yearTextStyle: widget.yearTextStyle ?? Theme.of(context).textTheme.overline.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 10,
@@ -128,6 +122,10 @@ class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObse
         },
       ),
     );
+  }
+
+  DateTime removeTime(DateTime dateTime) {
+    return DateTime(dateTime.year, dateTime.month, dateTime.day);
   }
 
   bool compareDate(DateTime date1, DateTime date2) {
