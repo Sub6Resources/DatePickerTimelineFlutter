@@ -43,7 +43,7 @@ class DatePickerTimeline extends StatefulWidget {
   State<StatefulWidget> createState() => new _DatePickerState();
 }
 
-class _DatePickerState extends State<DatePickerTimeline> {
+class _DatePickerState extends State<DatePickerTimeline> with WidgetsBindingObserver {
   ScrollController _scrollController;
 
   double _width;
@@ -64,6 +64,12 @@ class _DatePickerState extends State<DatePickerTimeline> {
       );
     });
     initializeDateFormatting(widget.locale, null);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -98,6 +104,7 @@ class _DatePickerState extends State<DatePickerTimeline> {
               setState(() {
                 widget.currentDate = selectedDate;
               });
+              _width = WidgetsBinding.instance.renderView.size.width / 2 - 56;
               _scrollController.animateTo(
                 index * 70.0 - _width,
                 duration: Duration(milliseconds: 200),
