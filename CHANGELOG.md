@@ -1,3 +1,20 @@
+## [1.2.3] - 06/03/2021
+
+* Migrated to Null Safety
+
+## [1.2.1] - 15/08/2020
+
+* Added option to activate/deactivate certain dates
+* Fixed bug where slider was going past the selected date
+
+## [1.2.0] - 31/03/2020
+
+* This version is breaking backward compatibility
+* Added option to show past dates
+* Added option to change the selected date text color separately
+* Added a controller to the control the DatePicker widget
+* Added option to change the width of the Date Widget Item
+
 ## [1.1.3] - 30/09/2019
 
 * Fixed issue with Locale not being initialized

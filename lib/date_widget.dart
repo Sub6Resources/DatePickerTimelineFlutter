@@ -10,27 +10,30 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateWidget extends StatelessWidget {
+  final double? width;
   final DateTime date;
   final TextStyle yearTextStyle, monthTextStyle, dayTextStyle, dateTextStyle;
   final Color selectionColor;
-  final DateChangeListener onDateSelected;
-  final String locale;
+  final DateSelectionCallback? onDateSelected;
+  final String? locale;
 
-  DateWidget(
-      {@required this.date,
-      @required this.yearTextStyle,
-      @required this.monthTextStyle,
-      @required this.dayTextStyle,
-      @required this.dateTextStyle,
-      @required this.selectionColor,
-      this.onDateSelected,
-      this.locale,
-      });
+  DateWidget({
+    required this.date,
+    required this.yearTextStyle,
+    required this.monthTextStyle,
+    required this.dayTextStyle,
+    required this.dateTextStyle,
+    required this.selectionColor,
+    this.width,
+    this.onDateSelected,
+    this.locale,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
+        width: width,
         margin: EdgeInsets.all(3.0),
         width: 64,
         decoration: BoxDecoration(
@@ -38,10 +41,9 @@ class DateWidget extends StatelessWidget {
           color: selectionColor,
         ),
         child: Padding(
-          padding:
-              const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 15, right: 15),
+          padding: EdgeInsets.all(8),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(new DateFormat("E", locale).format(date).toUpperCase(), // WeekDay
@@ -62,7 +64,7 @@ class DateWidget extends StatelessWidget {
         // Check if onDateSelected is not null
         if (onDateSelected != null) {
           // Call the onDateSelected Function
-          onDateSelected(this.date);
+          onDateSelected!(this.date);
         }
       },
     );

@@ -18,21 +18,35 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DateTime _selectedValue = DateTime.now().add(Duration(days: 5));
+  DatePickerController _controller = DatePickerController();
+
+  DateTime _selectedValue = DateTime.now();
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.replay),
+        onPressed: () {
+          _controller.animateToSelection();
+        },
+      ),
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(widget.title!),
         ),
         body: Container(
           padding: EdgeInsets.all(20.0),

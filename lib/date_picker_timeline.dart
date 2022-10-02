@@ -1,5 +1,8 @@
 library date_picker_timeline;
 
+
+export 'date_picker_widget.dart';
+
 import 'package:date_picker_timeline/date_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
